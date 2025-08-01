@@ -44,7 +44,7 @@ class Chnsub < Formula
 
   def caveats
     <<~EOS
-      torch isn’t vendored (wheels-only); after:
+      torch isn’t vendored (wheels‐only); after:
         brew install benjajuang/tools/chnsub
       you must then run once:
         pip3 install torch
