@@ -3,8 +3,8 @@ class Chnsub < Formula
 
   desc "Generate smart Chinese subtitles (SRT files)"
   homepage "https://github.com/benjajuang/chnsub"
-  url url "https://github.com/benjajuang/chnsub-app/archive/v1.0.5.tar.gz"
-  sha256 "a0829084aeca5541ca25b0c3002c444c51f342f9118746df8489fa5af30da3bf"
+  url url "https://github.com/benjajuang/chnsub-app/archive/v1.0.6.tar.gz"
+  sha256 "27e8536f02d0a1419ff9c1692d67d0efec0524a9468b9324e017e0606a3e2346"
 
   depends_on "python@3.11"
 
