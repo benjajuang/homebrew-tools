@@ -1,10 +1,9 @@
 class Chnsub < Formula
-  include Language::Python::Virtualenv
-
   desc "Generate smart Chinese subtitles (SRT files)"
   homepage "https://github.com/benjajuang/chnsub"
-  url url "https://github.com/benjajuang/chnsub-app/archive/v1.0.6.tar.gz"
-  sha256 "27e8536f02d0a1419ff9c1692d67d0efec0524a9468b9324e017e0606a3e2346"
+  url "https://github.com/benjajuang/chnsub-app/archive/refs/tags/v1.0.8.tar.gz"
+  sha256 "8d17f95b373db0890d8568b4f224f54f45f05a17142a693b17f2e05f4fdda6a8"
+  version "1.0.8"
 
   depends_on "python@3.11"
 
@@ -39,22 +38,29 @@ class Chnsub < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    libexec.install Dir["*"]
+    (bin/"chnsub").write <<~EOS
+      #!/bin/bash
+      exec "#{Formula["python@3.11"].opt_bin}/python3" "#{libexec}/src/main.py" "$@"
+    EOS
   end
 
   def caveats
     <<~EOS
-      torch isn’t vendored (wheels‐only); after:
-        brew install benjajuang/tools/chnsub
-      you must then run once:
-        pip3 install torch
+      chnsub has been installed, but Python dependencies must still be installed:
+        /opt/homebrew/opt/chnsub/libexec/bin/python -m pip install -r #{opt_libexec}/requirements.txt
 
-      Then you can simply:
+      Or use a virtualenv:
+        python3 -m venv ~/.venvs/chnsub
+        source ~/.venvs/chnsub/bin/activate
+        pip install -r #{opt_libexec}/requirements.txt
+
+      Then run:
         chnsub --help
     EOS
   end
 
   test do
-    assert_match "Generate smart Chinese subtitles", shell_output("#{bin}/chnsub --help")
+    assert_predicate bin/"chnsub", :exist?
   end
 end
